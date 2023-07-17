@@ -7,6 +7,7 @@ module.exports = {
       title: {type: Sequelize.STRING},
       content: {type: Sequelize.STRING},
       userId: {
+        field: 'user_id',
         type: Sequelize.INTEGER,
         allowNull: false,
         onUpdate: 'CASCADE',

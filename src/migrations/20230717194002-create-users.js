@@ -10,6 +10,7 @@ module.exports = {
         primaryKey: true,
       },
       displayName: {
+        field: 'display_name',
         type: Sequelize.STRING,
       },
       email: {
@@ -23,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING,
       }
      },{
-      undersocred: true,
+      underscored: true,
      });
 
   },
