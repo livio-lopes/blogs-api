@@ -1,12 +1,9 @@
-const { badRequest, invalidFields, missingField } = require('../utils/statusUtils');
+const { statusBadRequest, missingField } = require('../utils/statusUtils');
 
-const loginMiddleware = (req, res, next) => {
+const loginMiddleware = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email && !password) {
-    return res.status(badRequest).json(invalidFields);
-  }
-  if (!email || !password) {
-    return res.status(badRequest).json(missingField);
+    return res.status(statusBadRequest).json(missingField);
   }
   return next();
 };
