@@ -20,8 +20,7 @@ const userMiddleware = async (req, res, next) => {
   if (invalidPassword(password)) {
     return res.status(statusBadRequest).json(passwordInvalid);
   }
-  const existEmail = await existingEmail(email);
-  if (existEmail) {
+  if (await existingEmail(email)) {
     return res.status(statusConflict).json(userRegistred);
   }
   return next();

@@ -2,6 +2,7 @@ const statusBadRequest = 400;
 const statusConflict = 409;
 const statusOk = 200;
 const statusCreated = 201;
+const statusUnauthorized = 401;
 
 const invalidFields = { message: 'Invalid fields' };
 const missingField = { message: 'Some required fields are missing' };
@@ -19,6 +20,14 @@ const userRegistred = {
   message: 'User already registered',
 };
 
+const tokenNotFound = {
+  message: 'Token not found',
+};
+
+const tokenInvalid = {
+  message: 'Expired or invalid token',
+};
+
 module.exports = {
   invalidFields,
   missingField,
@@ -30,4 +39,7 @@ module.exports = {
   userRegistred,
   statusConflict,
   statusCreated,
+  tokenInvalid,
+  tokenNotFound,
+  statusUnauthorized,
 };
