@@ -5,6 +5,12 @@ const getByEmail = async (email) => {
   return user ? user.dataValues : undefined;
 };
 
+const addUser = async (infosUser) => {
+  const newUser = await User.create(infosUser);
+  return newUser.dataValues;
+};
+
 module.exports = {
   getByEmail,
+  addUser,
 };

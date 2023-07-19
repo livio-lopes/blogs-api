@@ -1,4 +1,7 @@
-const { statusOk, statusBadRequest, invalidFields } = require('../utils/statusUtils');
+const { statusOk,
+  statusBadRequest, 
+  invalidFields,
+  statusCreated } = require('../utils/statusUtils');
 const { createToken } = require('../utils/authUtils');
 const userService = require('../service/user.service');
 
@@ -9,9 +12,19 @@ const authLogin = async (req, res) => {
     return res.status(statusBadRequest).json(invalidFields);
   }
   delete user.password;
-  console.log(user);
   const token = createToken(user);
   return res.status(statusOk).json({ token });
 };
 
-module.exports = authLogin;
+const addUser = async (req, res) => {
+  const newUser = req.body;
+  await userService.addUser(req.body);
+  delete newUser.password;
+  const token = createToken(newUser);
+  return res.status(statusCreated).json({ token });
+};
+
+module.exports = { 
+  authLogin, 
+  addUser, 
+};

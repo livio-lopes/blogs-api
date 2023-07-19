@@ -9,7 +9,7 @@ const { invalidDisplayName,
   invalidPassword,
   existingEmail } = require('../utils/validationUtils');
 
-const userMiddleware = (req, res, next) => {
+const userMiddleware = async (req, res, next) => {
   const { displayName, email, password } = req.body;
   if (invalidDisplayName(displayName)) {
     return res.status(statusBadRequest).json(displayNameInvalid);
@@ -20,7 +20,8 @@ const userMiddleware = (req, res, next) => {
   if (invalidPassword(password)) {
     return res.status(statusBadRequest).json(passwordInvalid);
   }
-  if (existingEmail(email)) {
+  const existEmail = await existingEmail(email);
+  if (existEmail) {
     return res.status(statusConflict).json(userRegistred);
   }
   return next();
