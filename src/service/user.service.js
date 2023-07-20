@@ -5,6 +5,11 @@ const getByEmail = async (email) => {
   return user ? user.dataValues : undefined;
 };
 
+const getAllUsers = async () => {
+  const users = await User.findAll();
+  return users.dataValues;
+};
+
 const addUser = async (infosUser) => {
   const newUser = await User.create(infosUser);
   return newUser.dataValues;
@@ -13,4 +18,5 @@ const addUser = async (infosUser) => {
 module.exports = {
   getByEmail,
   addUser,
+  getAllUsers,
 };
