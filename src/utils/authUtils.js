@@ -6,17 +6,17 @@ const config = {
 
 const cipher = process.env.JWT_SECRET;
 
+const extractToken = (bearerToken) => bearerToken.split(' ')[1];
+
 const createToken = (info) => jwt.sign(info, cipher, config);
-const verifyToken = (token) => {
-  try {
-    const checkedToken = jwt.verify(token, cipher);
-    return checkedToken;
-  } catch (error) {
-    return undefined;
-  }
+
+const verifyToken = (bearerToken) => {
+  const token = extractToken(bearerToken);
+  return jwt.verify(token, cipher);
 };
 
 module.exports = {
   createToken,
+  extractToken,
   verifyToken,
 };

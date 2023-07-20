@@ -25,7 +25,7 @@ const addUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const allUsers = await userService.getAllUsers;
+  const allUsers = await userService.getAllUsers();
   return res.status(statusOk).json(allUsers);
 };
 
