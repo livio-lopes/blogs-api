@@ -1,7 +1,9 @@
 const { statusOk,
   statusBadRequest, 
   invalidFields,
-  statusCreated } = require('../utils/statusUtils');
+  statusCreated, 
+  statusNotFound,
+  userNoExist } = require('../utils/statusUtils');
 const { createToken } = require('../utils/authUtils');
 const userService = require('../service/user.service');
 
@@ -29,8 +31,16 @@ const getAllUsers = async (req, res) => {
   return res.status(statusOk).json(allUsers);
 };
 
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const user = await userService.getUserById(Number(id));
+  if (!user) return res.status(statusNotFound).json(userNoExist);
+  return res.status(statusOk).json(user);
+};
+
 module.exports = { 
   authLogin, 
   addUser, 
   getAllUsers,
+  getUserById,
 };
