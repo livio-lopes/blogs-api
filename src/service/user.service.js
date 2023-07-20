@@ -10,6 +10,11 @@ const getAllUsers = async () => {
   return users;
 };
 
+const getUserById = async (id) => {
+  const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
+  return user;
+};
+
 const addUser = async (infosUser) => {
   const newUser = await User.create(infosUser);
   return newUser.dataValues;
@@ -19,4 +24,5 @@ module.exports = {
   getByEmail,
   addUser,
   getAllUsers,
+  getUserById,
 };
