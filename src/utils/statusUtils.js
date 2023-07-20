@@ -33,6 +33,10 @@ const userNoExist = {
   message: 'User does not exist',
 };
 
+const nameRequired = {
+  message: '"name" is required',
+};
+
 module.exports = {
   invalidFields,
   missingField,
@@ -49,4 +53,5 @@ module.exports = {
   statusUnauthorized,
   statusNotFound,
   userNoExist,
+  nameRequired,
 };
