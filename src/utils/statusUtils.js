@@ -37,6 +37,10 @@ const nameRequired = {
   message: '"name" is required',
 };
 
+const categoryIdNotFound = {
+  message: 'one or more "categoryIds" not found',
+};
+
 module.exports = {
   invalidFields,
   missingField,
@@ -54,4 +58,5 @@ module.exports = {
   statusNotFound,
   userNoExist,
   nameRequired,
+  categoryIdNotFound,
 };
