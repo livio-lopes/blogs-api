@@ -14,7 +14,6 @@ const authMiddleware = (req, res, next) => {
   } catch (error) {
     return res.status(statusUnauthorized).json(tokenInvalid);
   }
-  // return res.status(statusUnauthorized).json(tokenInvalid);
 };
 
 module.exports = authMiddleware;
