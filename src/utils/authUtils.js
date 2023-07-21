@@ -6,9 +6,9 @@ const config = {
 
 const cipher = process.env.JWT_SECRET;
 
-const extractToken = (bearerToken) => bearerToken.split(' ')[1];
-
 const createToken = (info) => jwt.sign(info, cipher, config);
+
+const extractToken = (bearerToken) => bearerToken.split(' ')[1];
 
 const verifyToken = (token) => {
   if (extractToken(token)) {
