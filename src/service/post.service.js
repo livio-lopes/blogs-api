@@ -48,10 +48,8 @@ const getPostById = async (id) => {
   return postById;
 };
 const updatePost = async ({ id, title, content }) => {
-  const updatedPost = await BlogPost.update(
-    { title, content },
-    { where: { id } },
-  );
+await BlogPost.update({ title, content }, { where: { id } });
+  const updatedPost = await getPostById(Number(id));
   return updatedPost;
 };
 

@@ -33,6 +33,9 @@ const userNoExist = {
   message: 'User does not exist',
 };
 
+const userUnauthorizad = {
+  message: 'Unauthorized user',
+};
 const nameRequired = {
   message: '"name" is required',
 };
@@ -64,4 +67,5 @@ module.exports = {
   nameRequired,
   categoryIdNotFound,
   postNoExist,
+  userUnauthorizad,
 };
