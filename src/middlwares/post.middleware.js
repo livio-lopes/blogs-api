@@ -1,14 +1,13 @@
 const { statusBadRequest, missingField, categoryIdNotFound } = require('../utils/statusUtils');
-const categoryService = require('../service/category.service');
+const { invalidIdsCategories } = require('../utils/validationUtils');
 
 const postMiddleware = async (req, res, next) => {
-  const { title, content, categoryId } = req.body;
+  const { title, content, categoryIds } = req.body;
   if (!title || !content) {
     return res.status(statusBadRequest).json(missingField);
   }
-  const allCategories = await categoryService.getAllCategories();
-  const listIdsCategories = allCategories.map(({ id }) => id);
-  if (!categoryId || JSON.stringify(categoryId) !== JSON.stringify(listIdsCategories)) {
+  const checkedIds = await invalidIdsCategories(categoryIds);
+  if (checkedIds) {
     return res.status(statusBadRequest).json(categoryIdNotFound);
   }
   return next();

@@ -10,4 +10,9 @@ const getAllCategories = async () => {
   return allCategories;
 };
 
-module.exports = { addCategory, getAllCategories };
+const getCategoryById = async (id) => {
+  const category = await Category.findByPk(id);
+  return category.dataValues;
+};
+
+module.exports = { addCategory, getAllCategories, getCategoryById };

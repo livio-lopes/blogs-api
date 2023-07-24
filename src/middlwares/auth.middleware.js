@@ -10,6 +10,7 @@ const authMiddleware = (req, res, next) => {
 
     const user = verifyToken(authorization);
     req.user = user.id;
+    console.log(req.user);
     return next();
   } catch (error) {
     return res.status(statusUnauthorized).json(tokenInvalid);

@@ -1,7 +1,7 @@
 const express = require('express');
 const postMiddleware = require('../middlwares/post.middleware');
 const authMiddleware = require('../middlwares/auth.middleware');
-const { createPost } = require('../service/post.service');
+const { createPost } = require('../controller/post.controller');
 
 const postRoute = express.Router();
 
