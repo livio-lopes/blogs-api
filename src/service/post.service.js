@@ -52,7 +52,9 @@ await BlogPost.update({ title, content }, { where: { id } });
   return updatedPost;
 };
 
-const deletePost = (id) => BlogPost.destroy({ where: { id } });
+const deletePost = async (id) => { 
+  await BlogPost.destroy({ where: { id } });
+ };
 
 module.exports = {
   createPost,

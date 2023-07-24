@@ -1,11 +1,13 @@
 const postService = require('../service/post.service');
-const { statusCreated, statusOk, statusNotFound, postNoExist, statusUnauthorized, userUnauthorizad, statusNoContent } = require('../utils/statusUtils');
+const { statusCreated, statusOk,
+  statusNotFound, postNoExist,
+  statusUnauthorized, userUnauthorizad, statusNoContent } = require('../utils/statusUtils');
 
 const createPost = async (req, res) => {
- const { title, content, categoryIds } = req.body;
- const newPost = { title, content, categoryIds, userId: req.user };
- const createdPost = await postService.createPost(newPost);
- return res.status(statusCreated).json(createdPost);
+  const { title, content, categoryIds } = req.body;
+  const newPost = { title, content, categoryIds, userId: req.user };
+  const createdPost = await postService.createPost(newPost);
+  return res.status(statusCreated).json(createdPost);
 };
 
 const getAllPostInfoComplete = async (req, res) => {
@@ -29,15 +31,16 @@ const updateInfoPost = async (req, res) => {
 const deletePost = async (req, res) => {
   const userNow = req.user;
   const { id } = req.params;
-  const post = await postService.getPostById(Number(id)); 
+  const post = await postService.getPostById(Number(id));
   if (!post) {
     return res.status(statusNotFound).json(postNoExist);
   }
-  if (userNow !== post.id) {
+  if (userNow !== post.userId) {
     return res.status(statusUnauthorized).json(userUnauthorizad);
   }
-  await postService.deletePost(Number(id));
-  return res.status(statusNoContent);
+ await postService.deletePost(Number(id));
+
+  return res.status(statusNoContent).end();
 };
 
 module.exports = {
