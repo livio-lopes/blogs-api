@@ -41,6 +41,10 @@ const categoryIdNotFound = {
   message: 'one or more "categoryIds" not found',
 };
 
+const postNoExist = {
+  message: 'Post does not exist',
+};
+
 module.exports = {
   invalidFields,
   missingField,
@@ -59,4 +63,5 @@ module.exports = {
   userNoExist,
   nameRequired,
   categoryIdNotFound,
+  postNoExist,
 };
