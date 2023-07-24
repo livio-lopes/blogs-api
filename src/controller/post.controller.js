@@ -9,7 +9,7 @@ const createPost = async (req, res) => {
 };
 
 const getAllPostInfoComplete = async (req, res) => {
-  const allPost = await postService.infoPostComplete();
+  const allPost = await postService.getAllPost();
   return res.status(statusOk).json(allPost);
 };
 const getInfoPostCompleteById = async (req, res) => {

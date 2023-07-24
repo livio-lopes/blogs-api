@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
-const { BlogPost, PostCategory } = require('../models');
+const { BlogPost, PostCategory, User, Category } = require('../models');
 const config = require('../config/config');
-const { getAllUsers } = require('./user.service');
-const { getAllCategories } = require('./category.service');
 
 const env = process.env.NODE_EVN || 'development';
 const sequelize = new Sequelize(config[env]);
@@ -26,39 +24,52 @@ const createPost = async (infoPost) => {
 };
 
 const getAllPost = async () => {
-  const allPosts = await BlogPost.findAll();
+  const allPosts = await BlogPost.findAll(
+    { include: [
+      { model: User,
+         as: 'user', 
+         attributes: { exclude: ['password'] }, 
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+        ] },
+);
+
   return allPosts;
 };
 
-const getAllPostCategories = async () => {
-  const allPostCategories = await PostCategory.findAll();
-  return allPostCategories;
-};
+// const getAllPostCategories = async () => {
+//   const allPostCategories = await PostCategory.findAll();
+//   return allPostCategories;
+// };
 
-const postAddUserInfo = async (posts) => {
-  const allUsers = await getAllUsers();
-  const postWithUsers = posts.map((post) => {
-    const user = allUsers.find(({ id }) => id === post.userId);
-    return { ...post.dataValues, user };
-  });
-  return postWithUsers;
-};
+// const postAddUserInfo = async (posts) => {
+//   const allUsers = await getAllUsers();
+//   const postWithUsers = posts.map((post) => {
+//     const user = allUsers.find(({ id }) => id === post.userId);
+//     return { ...post.dataValues, user };
+//   });
+//   return postWithUsers;
+// };
 
-const postAddCategoriesInfo = async (posts) => {
-  const allPostCategories = await getAllPostCategories();
-  const allCategories = await getAllCategories();
-  const postWithCategories = posts
-  .map((post) => {
-    const { categoryId } = allPostCategories.find(({ postId }) => postId === post.id);
-    return { ...post, categories: allCategories.filter(({ id }) => id === categoryId) };
-  });
-  return postWithCategories;
-};
-const infoPostComplete = async () => {
-  const allPosts = await getAllPost();
-  const postWithUsers = await postAddUserInfo(allPosts);
-  const postWithCategories = await postAddCategoriesInfo(postWithUsers);
-  return postWithCategories;
-};
+// const postAddCategoriesInfo = async (posts) => {
+//   const allPostCategories = await getAllPostCategories();
+//   const allCategories = await getAllCategories();
+//   const postWithCategories = posts
+//   .map((post) => {
+//     const { categoryId } = allPostCategories.find(({ postId }) => postId === post.id);
+//     return { ...post, categories: allCategories.filter(({ id }) => id === categoryId) };
+//   });
+//   return postWithCategories;
+// };
+// const infoPostComplete = async () => {
+//   const allPosts = await getAllPost();
+//   const postWithUsers = await postAddUserInfo(allPosts);
+//   const postWithCategories = await postAddCategoriesInfo(postWithUsers);
+//   return postWithCategories;
+// };
 
-module.exports = { createPost, infoPostComplete };
+module.exports = { createPost, getAllPost };
