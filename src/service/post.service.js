@@ -41,35 +41,19 @@ const getAllPost = async () => {
   return allPosts;
 };
 
-// const getAllPostCategories = async () => {
-//   const allPostCategories = await PostCategory.findAll();
-//   return allPostCategories;
-// };
+  const getPostById = async (id) => {
+    const postById = await BlogPost.findByPk(Number(id), { include: [
+      { model: User,
+         as: 'user', 
+         attributes: { exclude: ['password'] }, 
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+        ] });
+    return postById;
+  };
 
-// const postAddUserInfo = async (posts) => {
-//   const allUsers = await getAllUsers();
-//   const postWithUsers = posts.map((post) => {
-//     const user = allUsers.find(({ id }) => id === post.userId);
-//     return { ...post.dataValues, user };
-//   });
-//   return postWithUsers;
-// };
-
-// const postAddCategoriesInfo = async (posts) => {
-//   const allPostCategories = await getAllPostCategories();
-//   const allCategories = await getAllCategories();
-//   const postWithCategories = posts
-//   .map((post) => {
-//     const { categoryId } = allPostCategories.find(({ postId }) => postId === post.id);
-//     return { ...post, categories: allCategories.filter(({ id }) => id === categoryId) };
-//   });
-//   return postWithCategories;
-// };
-// const infoPostComplete = async () => {
-//   const allPosts = await getAllPost();
-//   const postWithUsers = await postAddUserInfo(allPosts);
-//   const postWithCategories = await postAddCategoriesInfo(postWithUsers);
-//   return postWithCategories;
-// };
-
-module.exports = { createPost, getAllPost };
+module.exports = { createPost, getAllPost, getPostById };

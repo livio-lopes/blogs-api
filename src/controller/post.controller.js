@@ -14,8 +14,7 @@ const getAllPostInfoComplete = async (req, res) => {
 };
 const getInfoPostCompleteById = async (req, res) => {
   const { id } = req.params;
-  const allPost = await postService.infoPostComplete();
-  const postById = allPost.find((post) => Number(id) === post.id);
+  const postById = await postService.getPostById(id);
   if (!postById) return res.status(statusNotFound).json(postNoExist);
   return res.status(statusOk).json(postById);
 };
