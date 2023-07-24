@@ -12,23 +12,20 @@ const createPost = async (infoPost) => {
     const newPost = await BlogPost.create(
       { title, content, userId }, 
       { transaction: t },
-);  
-    // console.log(newPost);
+    );  
     const listPostCategories = categoryIds.map((id) => ({
         postId: newPost.id,
         categoryId: id,
       }));
-
      await PostCategory.bulkCreate(listPostCategories, { transaction: t });
-//     const newPostCategories = categoryIds.map((categoryId) => PostCategory.create(
-//     { postId: newPost.id, categoryId }, 
-//     { transaction: t },
-// ));
-
-    // await Promise.all(newPostCategories);
     return newPost;
   });
   return resultTransaction;
 };
 
-module.exports = { createPost };
+const getAllPost = async () => {
+  const allPost = await BlogPost.findAll();
+  return allPost;
+};
+
+module.exports = { createPost, getAllPost };
