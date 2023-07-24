@@ -1,5 +1,5 @@
 const postService = require('../service/post.service');
-const { statusCreated, statusOk, statusNotFound, postNoExist } = require('../utils/statusUtils');
+const { statusCreated, statusOk, statusNotFound, postNoExist, statusUnauthorized, userUnauthorizad, statusNoContent } = require('../utils/statusUtils');
 
 const createPost = async (req, res) => {
  const { title, content, categoryIds } = req.body;
@@ -26,9 +26,24 @@ const updateInfoPost = async (req, res) => {
   return res.status(statusOk).json(updatedPost);
 };
 
+const deletePost = async (req, res) => {
+  const userNow = req.user;
+  const { id } = req.params;
+  const post = await postService.getPostById(Number(id)); 
+  if (!post) {
+    return res.status(statusNotFound).json(postNoExist);
+  }
+  if (userNow !== post.id) {
+    return res.status(statusUnauthorized).json(userUnauthorizad);
+  }
+  await postService.deletePost(Number(id));
+  return res.status(statusNoContent);
+};
+
 module.exports = {
   createPost,
   getAllPostInfoComplete,
   getInfoPostCompleteById,
   updateInfoPost,
+  deletePost,
 };

@@ -1,6 +1,7 @@
 const statusBadRequest = 400;
 const statusConflict = 409;
 const statusOk = 200;
+const statusNoContent = 204;
 const statusCreated = 201;
 const statusUnauthorized = 401;
 const statusNotFound = 404;
@@ -68,4 +69,5 @@ module.exports = {
   categoryIdNotFound,
   postNoExist,
   userUnauthorizad,
+  statusNoContent,
 };
