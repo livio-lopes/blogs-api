@@ -19,8 +19,16 @@ const getInfoPostCompleteById = async (req, res) => {
   return res.status(statusOk).json(postById);
 };
 
+const updateInfoPost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const updatedPost = await postService.updatePost({ id, title, content });
+  return res.status(statusOk).json(updatedPost);
+};
+
 module.exports = {
   createPost,
   getAllPostInfoComplete,
   getInfoPostCompleteById,
+  updateInfoPost,
 };
