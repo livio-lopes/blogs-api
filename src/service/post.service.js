@@ -22,7 +22,6 @@ const includeConfig = {
 
 const createPost = async (infoPost) => {
   const { title, content, userId, categoryIds } = infoPost;
-  console.log('service', infoPost);
   const resultTransaction = await sequelize.transaction(async (t) => {
     const newPost = await BlogPost.create(
       { title, content, userId },
@@ -53,9 +52,12 @@ await BlogPost.update({ title, content }, { where: { id } });
   return updatedPost;
 };
 
+const deletePost = (id) => BlogPost.destroy({ where: { id } });
+
 module.exports = {
   createPost,
   getAllPost,
   getPostById,
   updatePost,
+  deletePost,
 };
