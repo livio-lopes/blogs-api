@@ -5,14 +5,15 @@ const { createPost,
     getAllPostInfoComplete, 
     getInfoPostCompleteById, 
     updateInfoPost, 
-    deletePost } = require('../controller/post.controller');
+    deletePost, 
+    queryAllPosts } = require('../controller/post.controller');
 const updatePostMiddleware = require('../middlwares/updatePost.middleware');
 
 const postRoute = express.Router();
 
-postRoute.get('/search', authMiddleware);
-postRoute.get('/:id', authMiddleware, getInfoPostCompleteById);
+postRoute.get('/search', authMiddleware, queryAllPosts);
 postRoute.get('/', authMiddleware, getAllPostInfoComplete);
+postRoute.get('/:id', authMiddleware, getInfoPostCompleteById);
 postRoute.put('/:id', authMiddleware, updatePostMiddleware, updateInfoPost);
 postRoute.post('/', authMiddleware, postMiddleware, createPost);
 postRoute.delete('/:id', authMiddleware, deletePost);

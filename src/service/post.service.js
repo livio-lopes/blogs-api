@@ -48,15 +48,16 @@ const getAllPostBySearch = async (q) => {
     const allPosts = await BlogPost.findAll(includeConfig);
     return allPosts;
   }
-  const searchPosts = await BlogPost.findAll({ 
+  const searchPosts = await BlogPost.findAll({
     where: {
-      [Op.or]: {
-        title: q,
-        content: q,
-      },
-    }, 
-  }, includeConfig);
-    return searchPosts;
+      [Op.or]: [
+        { title: { [Op.like]: `%${q}%` } },
+        { content: { [Op.like]: `%${q}%` } },
+      ],
+    },
+    include: includeConfig.include,
+  });
+  return searchPosts;
 };
 
 const getPostById = async (id) => {
@@ -64,14 +65,14 @@ const getPostById = async (id) => {
   return postById;
 };
 const updatePost = async ({ id, title, content }) => {
-await BlogPost.update({ title, content }, { where: { id } });
+  await BlogPost.update({ title, content }, { where: { id } });
   const updatedPost = await getPostById(Number(id));
   return updatedPost;
 };
 
-const deletePost = async (id) => { 
+const deletePost = async (id) => {
   await BlogPost.destroy({ where: { id } });
- };
+};
 
 module.exports = {
   createPost,
