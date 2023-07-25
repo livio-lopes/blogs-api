@@ -3,7 +3,8 @@ const { statusOk,
   invalidFields,
   statusCreated, 
   statusNotFound,
-  userNoExist } = require('../utils/statusUtils');
+  userNoExist, 
+  statusNoContent } = require('../utils/statusUtils');
 const { createToken } = require('../utils/authUtils');
 const userService = require('../service/user.service');
 
@@ -38,9 +39,16 @@ const getUserById = async (req, res) => {
   return res.status(statusOk).json(user);
 };
 
+const deleteUser = async (req, res) => {
+  const id = req.user;
+  await userService.deleteUser(id);
+  return res.status(statusNoContent).end();
+};
+
 module.exports = { 
   authLogin, 
   addUser, 
   getAllUsers,
   getUserById,
+  deleteUser,
 };
