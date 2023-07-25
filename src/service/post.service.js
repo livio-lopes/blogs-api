@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, User, Category } = require('../models');
 const config = require('../config/config');
 
@@ -42,6 +43,22 @@ const getAllPost = async () => {
   return allPosts;
 };
 
+const getAllPostBySearch = async (q) => {
+  if (!q) {
+    const allPosts = await BlogPost.findAll(includeConfig);
+    return allPosts;
+  }
+  const searchPosts = await BlogPost.findAll({ 
+    where: {
+      [Op.or]: {
+        title: q,
+        content: q,
+      },
+    }, 
+  });
+    return searchPosts;
+};
+
 const getPostById = async (id) => {
   const postById = await BlogPost.findByPk(Number(id), includeConfig);
   return postById;
@@ -62,4 +79,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  getAllPostBySearch,
 };
