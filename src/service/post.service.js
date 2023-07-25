@@ -55,7 +55,7 @@ const getAllPostBySearch = async (q) => {
         content: q,
       },
     }, 
-  });
+  }, includeConfig);
     return searchPosts;
 };
 
